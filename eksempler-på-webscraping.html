@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kapittel 3 Eksempler på webscraping | Webscraping med R</title>
+  <meta name="description" content="Kapittel 3 Eksempler på webscraping | Webscraping med R" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Kapittel 3 Eksempler på webscraping | Webscraping med R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kapittel 3 Eksempler på webscraping | Webscraping med R" />
+  
+  
+  
+
+<meta name="author" content="Solveig Bjørkholt" />
+
+
+<meta name="date" content="2020-07-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hva-er-webscraping.html"/>
+<link rel="next" href="hva-er-en-nettside.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduksjon</a></li>
+<li class="chapter" data-level="2" data-path="hva-er-webscraping.html"><a href="hva-er-webscraping.html"><i class="fa fa-check"></i><b>2</b> Hva er webscraping?</a></li>
+<li class="chapter" data-level="3" data-path="eksempler-på-webscraping.html"><a href="eksempler-på-webscraping.html"><i class="fa fa-check"></i><b>3</b> Eksempler på webscraping</a><ul>
+<li class="chapter" data-level="3.1" data-path="eksempler-på-webscraping.html"><a href="eksempler-på-webscraping.html#hva-består-en-nettside-av"><i class="fa fa-check"></i><b>3.1</b> Hva består en nettside av?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hva-er-en-nettside.html"><a href="hva-er-en-nettside.html"><i class="fa fa-check"></i><b>4</b> Hva er en nettside?</a></li>
+<li class="chapter" data-level="5" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>5</b> HTML</a></li>
+<li class="chapter" data-level="6" data-path="andre-nettsidespråk.html"><a href="andre-nettsidespråk.html"><i class="fa fa-check"></i><b>6</b> Andre nettsidespråk</a></li>
+<li class="chapter" data-level="7" data-path="webscraping-og-webcrawling.html"><a href="webscraping-og-webcrawling.html"><i class="fa fa-check"></i><b>7</b> Webscraping og webcrawling</a></li>
+<li class="chapter" data-level="8" data-path="utfordringer-ved-webscraping.html"><a href="utfordringer-ved-webscraping.html"><i class="fa fa-check"></i><b>8</b> Utfordringer ved webscraping</a></li>
+<li class="chapter" data-level="9" data-path="hensyn-å-ta-når-man-webscraper.html"><a href="hensyn-å-ta-når-man-webscraper.html"><i class="fa fa-check"></i><b>9</b> Hensyn å ta når man webscraper</a></li>
+<li class="chapter" data-level="10" data-path="alternativer-til-webscraping.html"><a href="alternativer-til-webscraping.html"><i class="fa fa-check"></i><b>10</b> Alternativer til webscraping</a></li>
+<li class="chapter" data-level="11" data-path="hente-ut-tekst.html"><a href="hente-ut-tekst.html"><i class="fa fa-check"></i><b>11</b> Hente ut tekst</a><ul>
+<li class="chapter" data-level="11.1" data-path="hente-ut-tekst.html"><a href="hente-ut-tekst.html#oppgave-1"><i class="fa fa-check"></i><b>11.1</b> Oppgave 1</a></li>
+<li class="chapter" data-level="11.2" data-path="hente-ut-tekst.html"><a href="hente-ut-tekst.html#oppgave-1-fasit"><i class="fa fa-check"></i><b>11.2</b> Oppgave 1: Fasit</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html"><i class="fa fa-check"></i><b>12</b> Hente ut tabeller</a><ul>
+<li class="chapter" data-level="12.1" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html#oppgave-2"><i class="fa fa-check"></i><b>12.1</b> Oppgave 2</a></li>
+<li class="chapter" data-level="12.2" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html#oppgave-2-fasit"><i class="fa fa-check"></i><b>12.2</b> Oppgave 2: Fasit</a></li>
+<li class="chapter" data-level="12.3" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html#rydde-i-tabellen"><i class="fa fa-check"></i><b>12.3</b> Rydde i tabellen</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="andre-eksempler.html"><a href="andre-eksempler.html"><i class="fa fa-check"></i><b>13</b> Andre eksempler</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Webscraping med R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="eksempler-på-webscraping" class="section level1">
+<h1><span class="header-section-number">Kapittel 3</span> Eksempler på webscraping</h1>
+<p>Webscraping kan brukes i flere sammenhenger:</p>
+<ul>
+<li>Sammenlikne priser på sofaer som utlyses på www.finn.no og www.ikea.no.</li>
+<li>Hente informasjon på aksjeutvikling via www.oslobors.no.</li>
+<li>Finne data på utdanning og arbeidserfaring via www.linkedin.com.</li>
+<li>Sentimentanalyse på hva folk sier om SSB via www.twitter.org.</li>
+</ul>
+<p>La oss se nærmere på en tysk undersøkelse som ble gjort våren 2020: “Daily updated website analysis on the reaction of companies to the Corona pandemic in Germany”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Denne undersøkelsen fulgte 1,1 million websider fra foretak i Tyskland over en periode fra 19. mars til 4. april 2020. Først søkte forskerne etter ord som var relatert til koronaepidemien på nettsidene (f. eks. SARS Covid-19). Andelen foretak som rapporterte om korona på nettsidene sine steg med omtrent 1 prosent hver uke i den aktuelle perioden.</p>
+<p><img src="figures/webscrape_eksempel1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Forskerne sjekket også på hvilken måte foretakene kunne antas å være påvirket av koronakrisen ved å sjekke konteksten rundt ordet og bruke en klassifiseringalgoritme for å finne ut om foretakene opplevde koronakrisen som problematisk for sin drift. De fant ut at det er forskjell mellom næringer på hvor vidt foretakene skrev at de opplevde problemer knyttet til koronakrisen, og at foretakene i Vest-Tyskland oftere rapporterte problemer enn foretakene i Øst-Tyskland.</p>
+<p><img src="figures/webscrape_eksempel2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Den mest kjente pakken for webscraping i R heter “Rvest”<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Det er denne pakken vi skal bruke i dette kurset. Men først går vi kort gjennom hvordan en nettside er bygget opp.</p>
+<div id="hva-består-en-nettside-av" class="section level2">
+<h2><span class="header-section-number">3.1</span> Hva består en nettside av?</h2>
+<p>Tre ting bygger opp en nettside:</p>
+<ol style="list-style-type: decimal">
+<li>Domenenavn (f. eks. en URL slik som www.ssb.no).</li>
+<li>En server som hoster websiden.</li>
+<li>Et språk for å lage websiden.</li>
+</ol>
+<p>Det er først og fremst punkt nummer tre som er viktig for oss som skal drive med webscraping.</p>
+<p>Det kan også være nyttig å være klar over forskjellen på front-end og back-end.</p>
+<ul>
+<li><p><em>Front-end webutvikling</em>: Den delen av websiden som en bruker interagerer med. De viktigste frontend-språkene er HTML, CSS og Javascript.</p></li>
+<li><p><em>Back-end webutvikling</em>: Alle tingene som jobber i bakgrunnen for å få apper og websider til å fungere, for eksempel databaser og script. Dette kan kodes i for eksempel SQL, Python, R, Java eller C++.</p></li>
+</ul>
+<p>De fleste nettsider er bygget med HTML<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. HTML står for “HyperText Markup Language”, og er et språk som spesifiserer struktur og innhold på en nettside. Du kan se på det som skjelettet til nettsiden.</p>
+<p>Under ser du et bilde av HTML-koden til forsiden til www.ssb.no. HTML-koden ligger i et strukturert format som starter med “head” og deretter går videre til “body”. Dette er de to “hovednodene” i HTML-koden. “Head” spesifiserer diverse metadata for nettsiden, for eksempel fonter og farger, mens “body” strukturerer innholdet på nettsiden. Det er gjerne de nodene som finnes innenfor “body” som vi er interessert i.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p> Kinne, J.; Krüger, M.; Lenz, D. &amp; Licht, G. (2020). «Daily updated website analysis on the reaction of companies to the Corona pandemic in Germany». DOI: 10.13140/RG.2.2.11366.37441<a href="eksempler-på-webscraping.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>I Python er hovedpakken Beautiful Soup<a href="eksempler-på-webscraping.html#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Det finnes likevel andre løsninger - noen moderne nettsider bygges for eksempel ved hjelp av Javascript (f. eks. React), og innholdet i disse nettsidene kan ikke hentes direkte. En løsning er å bruke f. eks. RSelenium. Designet på en nettside skrives dessuten ofte i et kodespråk som heter CSS.<a href="eksempler-på-webscraping.html#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hva-er-webscraping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hva-er-en-nettside.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

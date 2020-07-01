@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kapittel 7 Hente ut tabeller | Webscraping med R</title>
+  <meta name="description" content="Kapittel 7 Hente ut tabeller | Webscraping med R" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Kapittel 7 Hente ut tabeller | Webscraping med R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kapittel 7 Hente ut tabeller | Webscraping med R" />
+  
+  
+  
+
+<meta name="author" content="Solveig Bjørkholt" />
+
+
+<meta name="date" content="2020-07-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hente-ut-tekst.html"/>
+<link rel="next" href="andre-eksempler.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduksjon</a></li>
+<li class="chapter" data-level="2" data-path="introduksjon-til-webscraping.html"><a href="introduksjon-til-webscraping.html"><i class="fa fa-check"></i><b>2</b> Introduksjon til webscraping</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduksjon-til-webscraping.html"><a href="introduksjon-til-webscraping.html#hva-er-webscraping"><i class="fa fa-check"></i><b>2.1</b> Hva er webscraping?</a></li>
+<li class="chapter" data-level="2.2" data-path="introduksjon-til-webscraping.html"><a href="introduksjon-til-webscraping.html#eksempler-på-webscraping"><i class="fa fa-check"></i><b>2.2</b> Eksempler på webscraping</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="nettsidestruktur.html"><a href="nettsidestruktur.html"><i class="fa fa-check"></i><b>3</b> Nettsidestruktur</a><ul>
+<li class="chapter" data-level="3.1" data-path="nettsidestruktur.html"><a href="nettsidestruktur.html#hva-er-en-nettside"><i class="fa fa-check"></i><b>3.1</b> Hva er en nettside?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nettsidespråk.html"><a href="nettsidespråk.html"><i class="fa fa-check"></i><b>4</b> Nettsidespråk</a><ul>
+<li class="chapter" data-level="4.1" data-path="nettsidespråk.html"><a href="nettsidespråk.html#html"><i class="fa fa-check"></i><b>4.1</b> HTML</a></li>
+<li class="chapter" data-level="4.2" data-path="nettsidespråk.html"><a href="nettsidespråk.html#andre-nettsidespråk"><i class="fa fa-check"></i><b>4.2</b> Andre nettsidespråk</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html"><i class="fa fa-check"></i><b>5</b> Utfordringer, hensyn og alternativer</a><ul>
+<li class="chapter" data-level="5.1" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#webscraping-og-webcrawling"><i class="fa fa-check"></i><b>5.1</b> Webscraping og webcrawling</a></li>
+<li class="chapter" data-level="5.2" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#utfordringer-ved-webscraping"><i class="fa fa-check"></i><b>5.2</b> Utfordringer ved webscraping</a></li>
+<li class="chapter" data-level="5.3" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#hensyn-å-ta-når-man-webscraper"><i class="fa fa-check"></i><b>5.3</b> Hensyn å ta når man webscraper</a></li>
+<li class="chapter" data-level="5.4" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#alternativer-til-webscraping"><i class="fa fa-check"></i><b>5.4</b> Alternativer til webscraping</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hente-ut-tekst.html"><a href="hente-ut-tekst.html"><i class="fa fa-check"></i><b>6</b> Hente ut tekst</a><ul>
+<li class="chapter" data-level="6.1" data-path="hente-ut-tekst.html"><a href="hente-ut-tekst.html#oppgave-1"><i class="fa fa-check"></i><b>6.1</b> Oppgave 1</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html"><i class="fa fa-check"></i><b>7</b> Hente ut tabeller</a><ul>
+<li class="chapter" data-level="7.1" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html#oppgave-2"><i class="fa fa-check"></i><b>7.1</b> Oppgave 2</a></li>
+<li class="chapter" data-level="7.2" data-path="hente-ut-tabeller.html"><a href="hente-ut-tabeller.html#rydde-i-tabellen"><i class="fa fa-check"></i><b>7.2</b> Rydde i tabellen</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="andre-eksempler.html"><a href="andre-eksempler.html"><i class="fa fa-check"></i><b>8</b> Andre eksempler</a></li>
+<li class="chapter" data-level="9" data-path="fasit.html"><a href="fasit.html"><i class="fa fa-check"></i><b>9</b> Fasit</a><ul>
+<li class="chapter" data-level="9.1" data-path="fasit.html"><a href="fasit.html#oppgave-1-1"><i class="fa fa-check"></i><b>9.1</b> Oppgave 1</a></li>
+<li class="chapter" data-level="9.2" data-path="fasit.html"><a href="fasit.html#oppgave-2-1"><i class="fa fa-check"></i><b>9.2</b> Oppgave 2</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Webscraping med R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="hente-ut-tabeller" class="section level1">
+<h1><span class="header-section-number">Kapittel 7</span> Hente ut tabeller</h1>
+<p>For å hente ut tabeller fra en nettside, bruker vi samme struktur som tidligere, men denne gangen ordner og strukturer vi ut informasjon fra en html-node med <code>html_table</code>.</p>
+<p>Her bruker vi et eksempel som har hatt praktisk betydning for seksjonen min. I editeringsprosessen på sjekk av foretaks lån fra utlandet, ble nettsiden www.nib.int brukt i blant. Dette var Nordic Bank Investment sine nettsider, og her kan man søke seg fram til registrerte lån, for så å sjekke disse beløpene opp mot det respondentene har oppgitt i skjema.</p>
+<p>Prosessen ser slik ut:</p>
+<ol style="list-style-type: decimal">
+<li>Gå inn på www.nib.int.</li>
+<li>Trykk deg inn på “what we offer”.</li>
+<li>Trykk på “agreed loans”.</li>
+<li>Trykk på drop-down menyen “Country” og velg “Norway”.</li>
+</ol>
+<p>Lenken man står igjen med ser slik ut: <a href="https://www.nib.int/what_we_offer/agreed_loans?year=all&amp;country%5B%5D=Norway&amp;client_name=&amp;Search=Search" class="uri">https://www.nib.int/what_we_offer/agreed_loans?year=all&amp;country%5B%5D=Norway&amp;client_name=&amp;Search=Search</a></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Scroll ned til tabellen under og arbeid deg gjennom foretaksnavnene.</li>
+</ol>
+<p>Denne prosessen kan vi automatisere med webscraping.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">nibnett &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;https://www.nib.int/what_we_offer/agreed_loans?year=all&amp;country%5B%5D=Norway&amp;client_name=&amp;Search=Search&quot;</span>)</a>
+<a class="sourceLine" id="cb22-2" title="2"></a>
+<a class="sourceLine" id="cb22-3" title="3">nibnett_table &lt;-<span class="st"> </span>nibnett <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;table&quot;</span>)</a>
+<a class="sourceLine" id="cb22-5" title="5"></a>
+<a class="sourceLine" id="cb22-6" title="6">nib_lan &lt;-<span class="st"> </span>nibnett_table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="st">  </span><span class="kw">html_table</span>()</a>
+<a class="sourceLine" id="cb22-8" title="8"></a>
+<a class="sourceLine" id="cb22-9" title="9">table &lt;-<span class="st"> </span>nib_lan[[<span class="dv">2</span>]]</a>
+<a class="sourceLine" id="cb22-10" title="10"></a>
+<a class="sourceLine" id="cb22-11" title="11">table</a></code></pre></div>
+<p>All koden i én pipe:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">table &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;https://www.nib.int/what_we_offer/agreed_loans?year=all&amp;country%5B%5D=Norway&amp;client_name=&amp;Search=Search&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;table&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">html_table</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span>.[[<span class="dv">2</span>]]</a></code></pre></div>
+<p>Deretter kan vi lagre tabellen i excel.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">openxlsx<span class="op">::</span><span class="kw">write.xlsx</span>(table, <span class="dt">file =</span> <span class="st">&quot;./nib_lan.xlsx&quot;</span>)</a></code></pre></div>
+<div id="oppgave-2" class="section level2">
+<h2><span class="header-section-number">7.1</span> Oppgave 2</h2>
+<ul>
+<li>Gå inn på www.yr.no</li>
+<li>Finn HTML-strukturen på websiden.</li>
+<li>Finn den noden i HTML-koden som viser til tabellen som viser været tre dager frem.</li>
+<li>Hent ut denne tabellen til R.</li>
+<li>Lagre tabellen i en excel-fil.</li>
+</ul>
+</div>
+<div id="rydde-i-tabellen" class="section level2">
+<h2><span class="header-section-number">7.2</span> Rydde i tabellen</h2>
+<p>Selv om vi hentet inn tabellen fra nettsiden, betyr ikke det at den er pen og fin fra starten av. Det er mange formateringsfeil underveis i tabellen. Under ser vi et eksempel på en ryddeprosess som ender opp i et plot. Vi bruker både <code>string</code>-pakken og regex for å gjøre dette, samt mange <code>tidyverse</code>-operasjoner.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">colnames</span>() <span class="co"># Hente ut navnene på kolonnene. </span></a></code></pre></div>
+<pre><code>## [1] &quot;Date&quot;        &quot;Customer&quot;    &quot;Focus area&quot;  &quot;Loan agreed&quot; &quot;Summary&quot;    
+## [6] &quot;&quot;</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">table &lt;-<span class="st"> </span>table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="st">&quot;&quot;</span>) <span class="co"># Tar bort kolonnen som ikke har noe navn, altså kun indikert med &quot;&quot;.</span></a>
+<a class="sourceLine" id="cb27-3" title="3"></a>
+<a class="sourceLine" id="cb27-4" title="4">table &lt;-<span class="st"> </span>table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Customer =</span> <span class="kw">str_replace</span>(Customer, <span class="st">&quot;</span><span class="ch">\n\t\t\t\t\t</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>)) <span class="co"># Endrer &quot;Customer&quot;-variabelen slik at vi tar bort HTML-kode som her indikerer linjeskift (\n) og masse whitespace (\t).</span></a>
+<a class="sourceLine" id="cb27-6" title="6"></a>
+<a class="sourceLine" id="cb27-7" title="7">table &lt;-<span class="st"> </span>table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span> =<span class="st"> </span><span class="kw">str_extract</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>, <span class="st">&quot;[0-9]+(</span><span class="ch">\\</span><span class="st">.)?([0-9]+)?&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Endrer &quot;Loan agreed&quot;-variabelen slik at vi bare henter ut tallene. Disse kan være med punktum og flere tall bak. Derfor regex: tall [0-9] eller flere +, potensielt ()? fulgt av punktum \\., og deretter potensielt ()? nye tall [0-9] eller flere +.</span></a>
+<a class="sourceLine" id="cb27-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span> =<span class="st"> </span><span class="kw">str_trim</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>)) <span class="co"># Vi tar bort whitespace fra variabelen.</span></a>
+<a class="sourceLine" id="cb27-10" title="10"></a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="kw">str_length</span>(table<span class="op">$</span><span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>) <span class="co"># Hvor mange tall er i hver verdi på &quot;Loan agreed&quot; variabelen?</span></a></code></pre></div>
+<pre><code>##  [1] 4 5 4 5 5 5 5 5 4 2</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">table &lt;-<span class="st"> </span>table <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Legger inn nuller for å få hele tall, ikke tall oppgitt i millioner. Dersom tallet har 5 objekter, skal det på fire nuller, osv.</span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">str_length</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>, <span class="kw">str_c</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>, <span class="st">&quot;0000&quot;</span>),</a>
+<a class="sourceLine" id="cb29-3" title="3">                                <span class="kw">ifelse</span>(<span class="kw">str_length</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>, <span class="kw">str_c</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>, <span class="st">&quot;00000&quot;</span>),</a>
+<a class="sourceLine" id="cb29-4" title="4">                                       <span class="kw">ifelse</span>(<span class="kw">str_length</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>) <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="kw">str_c</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>, <span class="st">&quot;000000&quot;</span>),</a>
+<a class="sourceLine" id="cb29-5" title="5">                                              <span class="ot">NA</span>)))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span> =<span class="st"> </span><span class="kw">str_remove</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Tar bort punktum fra tallet.</span></a>
+<a class="sourceLine" id="cb29-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span> =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Gjør om tallet til numerisk verdi.</span></a>
+<a class="sourceLine" id="cb29-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Loan agreed</span><span class="st">`</span><span class="op">*</span><span class="dv">12</span>) <span class="co"># Ganger med 12 for å få pris i norske kroner.</span></a>
+<a class="sourceLine" id="cb29-9" title="9"></a>
+<a class="sourceLine" id="cb29-10" title="10">table <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Lager en tabell med foretak og hvor mye lån de har fått farget etter fokusområde. </span></a>
+<a class="sourceLine" id="cb29-11" title="11"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Customer, <span class="st">`</span><span class="dt">Loan agreed</span><span class="st">`</span>, <span class="dt">fill =</span> <span class="st">`</span><span class="dt">Focus area</span><span class="st">`</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-12" title="12"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-13" title="13"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-14" title="14"><span class="st">  </span><span class="kw">theme_light</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-15" title="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</a></code></pre></div>
+<p><img src="Kursmateriell_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hente-ut-tekst.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="andre-eksempler.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

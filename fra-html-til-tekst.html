@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kapittel 6 Fra HTML til tekst | Webscraping med R</title>
+  <meta name="description" content="Kapittel 6 Fra HTML til tekst | Webscraping med R" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Kapittel 6 Fra HTML til tekst | Webscraping med R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kapittel 6 Fra HTML til tekst | Webscraping med R" />
+  
+  
+  
+
+<meta name="author" content="Solveig Bjørkholt" />
+
+
+<meta name="date" content="2020-07-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="utfordringer-hensyn-og-alternativer.html"/>
+<link rel="next" href="fra-html-til-tabell.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduksjon</a></li>
+<li class="chapter" data-level="2" data-path="introduksjon-til-webscraping.html"><a href="introduksjon-til-webscraping.html"><i class="fa fa-check"></i><b>2</b> Introduksjon til webscraping</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduksjon-til-webscraping.html"><a href="introduksjon-til-webscraping.html#hva-er-webscraping"><i class="fa fa-check"></i><b>2.1</b> Hva er webscraping?</a></li>
+<li class="chapter" data-level="2.2" data-path="introduksjon-til-webscraping.html"><a href="introduksjon-til-webscraping.html#eksempler-på-webscraping"><i class="fa fa-check"></i><b>2.2</b> Eksempler på webscraping</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="nettsidestruktur.html"><a href="nettsidestruktur.html"><i class="fa fa-check"></i><b>3</b> Nettsidestruktur</a><ul>
+<li class="chapter" data-level="3.1" data-path="nettsidestruktur.html"><a href="nettsidestruktur.html#hva-er-en-nettside"><i class="fa fa-check"></i><b>3.1</b> Hva er en nettside?</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nettsidespråk.html"><a href="nettsidespråk.html"><i class="fa fa-check"></i><b>4</b> Nettsidespråk</a><ul>
+<li class="chapter" data-level="4.1" data-path="nettsidespråk.html"><a href="nettsidespråk.html#html"><i class="fa fa-check"></i><b>4.1</b> HTML</a></li>
+<li class="chapter" data-level="4.2" data-path="nettsidespråk.html"><a href="nettsidespråk.html#andre-nettsidespråk"><i class="fa fa-check"></i><b>4.2</b> Andre nettsidespråk</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html"><i class="fa fa-check"></i><b>5</b> Utfordringer, hensyn og alternativer</a><ul>
+<li class="chapter" data-level="5.1" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#webscraping-og-webcrawling"><i class="fa fa-check"></i><b>5.1</b> Webscraping og webcrawling</a></li>
+<li class="chapter" data-level="5.2" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#utfordringer-ved-webscraping"><i class="fa fa-check"></i><b>5.2</b> Utfordringer ved webscraping</a></li>
+<li class="chapter" data-level="5.3" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#hensyn-å-ta-når-man-webscraper"><i class="fa fa-check"></i><b>5.3</b> Hensyn å ta når man webscraper</a></li>
+<li class="chapter" data-level="5.4" data-path="utfordringer-hensyn-og-alternativer.html"><a href="utfordringer-hensyn-og-alternativer.html#alternativer-til-webscraping"><i class="fa fa-check"></i><b>5.4</b> Alternativer til webscraping</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="fra-html-til-tekst.html"><a href="fra-html-til-tekst.html"><i class="fa fa-check"></i><b>6</b> Fra HTML til tekst</a><ul>
+<li class="chapter" data-level="6.1" data-path="fra-html-til-tekst.html"><a href="fra-html-til-tekst.html#fra-html-til-tekst-1"><i class="fa fa-check"></i><b>6.1</b> Fra HTML til tekst</a></li>
+<li class="chapter" data-level="6.2" data-path="fra-html-til-tekst.html"><a href="fra-html-til-tekst.html#oppgave-1"><i class="fa fa-check"></i><b>6.2</b> Oppgave 1</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="fra-html-til-tabell.html"><a href="fra-html-til-tabell.html"><i class="fa fa-check"></i><b>7</b> Fra HTML til tabell</a><ul>
+<li class="chapter" data-level="7.1" data-path="fra-html-til-tabell.html"><a href="fra-html-til-tabell.html#hente-ut-tabeller"><i class="fa fa-check"></i><b>7.1</b> Hente ut tabeller</a></li>
+<li class="chapter" data-level="7.2" data-path="fra-html-til-tabell.html"><a href="fra-html-til-tabell.html#oppgave-2"><i class="fa fa-check"></i><b>7.2</b> Oppgave 2</a></li>
+<li class="chapter" data-level="7.3" data-path="fra-html-til-tabell.html"><a href="fra-html-til-tabell.html#rydde-i-tabellen"><i class="fa fa-check"></i><b>7.3</b> Rydde i tabellen</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="andre-eksempler.html"><a href="andre-eksempler.html"><i class="fa fa-check"></i><b>8</b> Andre eksempler</a><ul>
+<li class="chapter" data-level="8.1" data-path="andre-eksempler.html"><a href="andre-eksempler.html#hente-ut-lenker"><i class="fa fa-check"></i><b>8.1</b> Hente ut lenker</a></li>
+<li class="chapter" data-level="8.2" data-path="andre-eksempler.html"><a href="andre-eksempler.html#hente-ut-json"><i class="fa fa-check"></i><b>8.2</b> Hente ut JSON</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="fasit.html"><a href="fasit.html"><i class="fa fa-check"></i><b>9</b> Fasit</a><ul>
+<li class="chapter" data-level="9.1" data-path="fasit.html"><a href="fasit.html#oppgave-1-1"><i class="fa fa-check"></i><b>9.1</b> Oppgave 1</a></li>
+<li class="chapter" data-level="9.2" data-path="fasit.html"><a href="fasit.html#oppgave-2-1"><i class="fa fa-check"></i><b>9.2</b> Oppgave 2</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Webscraping med R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="fra-html-til-tekst" class="section level1">
+<h1><span class="header-section-number">Kapittel 6</span> Fra HTML til tekst</h1>
+<div id="fra-html-til-tekst-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Fra HTML til tekst</h2>
+<p>Vi bruker pakken <code>rvest</code> for å jobbe med webscraping. Det er en av de vanligste pakkene i R, og hører til gruppen av <code>tidyverse</code>, som lager en enklere og mer oversiktlig syntaks til R-kode.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(rvest)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<p>De viktigste funksjonene i rvest-pakken er:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">read_html</span>(url) <span class="co"># Scrape HTML-innhold fra en URL</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">html_nodes</span>() <span class="co"># Identifiserer HTML-noder (hmtl_node() identifiserer bare en node).</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">html_nodes</span>(“.class”) <span class="co"># Kaller en node basert på CSS-klasse.</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">html_nodes</span>(“<span class="co">#id”) # Kaller en node basert på &lt;div&gt; id.</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">html_nodes</span>(<span class="dt">xpath=</span>”xpath”) <span class="co"># Kaller en node basert på xpath.</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="kw">html_attrs</span>() <span class="co"># Identifiserer attributter, f. eks. lenker.</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">html_table</span>() <span class="co"># Gjør om HTML-tabeller til data frames.</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">html_text</span>() <span class="co"># Stripper vekk HTML-noder og henter bare ut teksten.</span></a></code></pre></div>
+<p>Kodene vi skal se på i denne delen er disse:</p>
+<ul>
+<li><strong>read_html()</strong>: Kaller på serveren og henter inn en nettside.</li>
+<li><strong>html_node()</strong>: Velger hvilken node (dvs. html-tag) som skal leses inn. Bruk <strong>html_nodes</strong> (flertall) for å lese inn alle nodene på nettsiden som har denne taggen.</li>
+<li><strong>html_text()</strong>: Ordner og strukturerer html-koden slik at vi får det i et lesbart format, her tenkt som tekst.</li>
+</ul>
+<p>Framgangsmåten for å hente informasjon er slik:</p>
+<ol style="list-style-type: decimal">
+<li>Bruk <code>read_html</code> med navnet på URL-en du vil hente informasjon fra inne i gåsetegn i parentes bak.</li>
+<li>Inspiserer nettsiden for å finne ut hvilken node du vil hente informasjon fra.</li>
+<li>Høyreklikk på noden i HTML-strukturen og velg “copy selector”.</li>
+<li>Spesifiserer node i <code>html_node</code>. Dette gjør du ved å lime inn det du kopierte i forrige operasjon.</li>
+<li>Siden vi vil hente ut teksten, skriver vi <code>html_text</code> etterpå.</li>
+</ol>
+<p>Disse kodesnuttene fletter vi sammen med pipe-operatoren <code>%&gt;%</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">page &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;https://www.regjeringen.no/no/dokumenter/meld.-st.-2-20192020/id2702126/?ch=1&quot;</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3">page &lt;-<span class="st"> </span>page <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;#kap1-1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># For å få hele kapittel 1</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw">html_text</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">read_html</span>(<span class="st">&quot;https://www.regjeringen.no/no/dokumenter/meld.-st.-2-20192020/id2702126/?ch=1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;#kap1-1-p1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># For å få bare avsnitt 1 i kapittel 1</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">html_text</span>()</a></code></pre></div>
+<pre><code>## [1] &quot;Regjeringen Solberg består av Høyre, Venstre og Kristelig Folkeparti etter at Fremskrittspartiet gikk ut av regjering i januar. Regjeringens politikk baseres på Granavolden-plattformen. I forståelse med Stortinget legger regjeringen frem Revidert nasjonalbudsjett 2020 etter ordinær tidsplan. Regjeringen vil legge frem en ny proposisjon i slutten av mai om veien videre, herunder om overgangen fra akutte krisetiltak til mer vekstfremmende tiltak. &quot;</code></pre>
+<p>Hva nå? Vi kunne f. eks. sjekket her hvor mange referanser som er til virusord.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">virusord &lt;-<span class="st"> </span><span class="kw">str_extract_all</span>(page, <span class="kw">c</span>(<span class="st">&quot;([a-z]+)?([Vv]irus)([a-z]+)?&quot;</span>)) <span class="co"># Henter ut alle ord som potensielt (?) begynner med bokstaver, har virus eller Virus i midten, og potensielt avsluttes med flere bokstaver.</span></a>
+<a class="sourceLine" id="cb8-2" title="2">virusord &lt;-<span class="st"> </span><span class="kw">unlist</span>(virusord)</a>
+<a class="sourceLine" id="cb8-3" title="3">                            </a>
+<a class="sourceLine" id="cb8-4" title="4">virustabell &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">tekst =</span> page) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span>tidytext<span class="op">::</span><span class="kw">unnest_tokens</span>(ord, tekst) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="st">  </span><span class="kw">count</span>(ord, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="st">  </span><span class="kw">filter</span>(ord <span class="op">%in%</span><span class="st"> </span>virusord) </a>
+<a class="sourceLine" id="cb8-8" title="8"></a>
+<a class="sourceLine" id="cb8-9" title="9">virustabell <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(ord, n)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="Kursmateriell_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Hva skjedde i denne koden? I den siste kodechunken lager vi et plot ved hjelp av <code>ggplot</code>-pakken. I den midterste kodechunken prosesserer vi tekst ved hjelp av <code>tidytext</code>-pakken. Vi kommer ikke til å gå nærmere inn på disse delene, men for de som er interessert kan <a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a> og <a href="https://www.tidytextmining.com/index.html" class="uri">https://www.tidytextmining.com/index.html</a> være til hjelp. Den øverste kodechunken skal vi imidlertid se nærmere, for her skjer det noe som brukes ganske mye i webscraping for å håndtere datainput fra nettsider. Vi henter ut et ord ved hjelp av regex.</p>
+<p>Ofte ønsker vi å ta ut deler fra data vi laster ned, og det kan vi gjøre ved å bruke pakken <code>stringr</code> sammen med litt regex. Regex er et kodespråk som refererer til språk, og <code>stringr</code>-pakken er en pakke som gjør vi kan jobbe med strenger i R. Alle funksjonene i <code>stringr</code>-pakken starter med <code>str_</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">library</span>(stringr)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">str_extract</span>() <span class="co"># Henter ut en spesifisert del fra en string</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw">str_extract_all</span>() <span class="co"># Henter ut flere spesifiserte deler fra en string</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw">str_replace</span>() <span class="co"># Erstatter en spesifisert del fra en string</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">str_replace_all</span>() <span class="co"># Erstatter flere spesifiserte deler fra en string</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw">str_remove</span>() <span class="co"># Tar bort en spesifisert del fra en string</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="kw">str_remove_all</span>() <span class="co"># Tar bort flere spesifiserte deler fra en string</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="kw">str_c</span>() <span class="co"># Limer sammen to strenger. (paste() eller paste0() i &#39;base R&#39;.)</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="kw">str_to_lower</span>() <span class="co"># Setter alle bokstaver i en string til lav bokstav</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="kw">str_to_upper</span>() <span class="co"># Setter alle bokstaver i en string til stor bokstav</span></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="kw">str_trim</span>() <span class="co"># Tar bort whitespace fra en string</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="kw">str_split</span>() <span class="co"># Splitter en string i to. (strsplit i &#39;base R&#39;.)</span></a></code></pre></div>
+<p><strong>Regex:</strong> Regex står for “Regular Expression”, og kalles ofte for “regulære uttrykk” på norsk. Regex gjør det mulig å beskrive en string utfra et mønster - det ligger altså et abstraksjonsnivå opp fra vanlig språk. For eksempel, vi har en serie med e-poster som ser slik ut:</p>
+<p><a href="mailto:bfu@ssb.no" class="email">bfu@ssb.no</a> 
+<a href="mailto:rts@ssb.no" class="email">rts@ssb.no</a> 
+<a href="mailto:pol@ssb.no" class="email">pol@ssb.no</a> 
+<a href="mailto:put@ssb.no" class="email">put@ssb.no</a> 
+<a href="mailto:amy@ssb.no" class="email">amy@ssb.no</a> </p>
+<p>Strukturen i disse e-postene er veldig like. Alle starter på tre bokstaver, så kommer en alfrakrøll, deretter ssb.no. Siden dette følger et spesielt mønster, kan vi beskrive det i regex. Nedenfor ser vi at vi kan spesifisere generelle mønstre innenfor klammeparentes i en string, f. eks. [a-z], som indikerer små bokstaver.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">eposter_string &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Vi må huske å sende ut eposter til bfu@ssb.no og rts@ssb.no. Det er ikke så viktig med pol@ssb.no, for han kan vi også nå via pelle@gmail.com. Dersom dere får tid kan dere også kontakte påt@ssb.no og AMY@ssb.no, som jobber med nettsiden ssb.no.&quot;</span>)</a></code></pre></div>
+<blockquote>
+<p>Vi må huske å sende ut eposter til <a href="mailto:bfu@ssb.no" class="email">bfu@ssb.no</a> og <a href="mailto:rts@ssb.no" class="email">rts@ssb.no</a>. Det er ikke så viktig med <a href="mailto:pol@ssb.no" class="email">pol@ssb.no</a>, for han kan vi også nå via <a href="mailto:pelle@gmail.com" class="email">pelle@gmail.com</a>. Dersom dere får tid kan dere også kontakte <a href="mailto:påt@ssb.no" class="email">påt@ssb.no</a> og <a href="mailto:AMY@ssb.no" class="email">AMY@ssb.no</a>, som jobber med nettsiden ssb.no.*</p>
+</blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">str_extract_all</span>(eposter_string, <span class="st">&quot;ssb.no&quot;</span>)  <span class="co"># Vi får med alle steder i teksten der &#39;ssb.no&#39; dukker opp</span></a></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;ssb.no&quot; &quot;ssb.no&quot; &quot;ssb.no&quot; &quot;ssb.no&quot; &quot;ssb.no&quot; &quot;ssb.no&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">str_extract_all</span>(eposter_string, <span class="st">&quot;[a-z]@ssb.no&quot;</span>)  <span class="co"># Vi får med alle steder i teksten der en liten bokstav følges av &#39;ssb.no&#39;</span></a></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;u@ssb.no&quot; &quot;s@ssb.no&quot; &quot;l@ssb.no&quot; &quot;t@ssb.no&quot;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">str_extract_all</span>(eposter_string, <span class="st">&quot;[a-z]+@ssb.no&quot;</span>)  <span class="co"># Vi får med alle steder i teksten der en eller flere små bokstaver følges av &#39;ssb.no&#39;</span></a></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;bfu@ssb.no&quot; &quot;rts@ssb.no&quot; &quot;pol@ssb.no&quot; &quot;t@ssb.no&quot;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">str_extract_all</span>(eposter_string, <span class="st">&quot;[a-zA-Z]+@ssb.no&quot;</span>)  <span class="co"># Vi får med alle steder i teksten der en eller flere små eller store bokstaver følges av &#39;ssb.no&#39;</span></a></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;bfu@ssb.no&quot; &quot;rts@ssb.no&quot; &quot;pol@ssb.no&quot; &quot;t@ssb.no&quot;   &quot;AMY@ssb.no&quot;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">str_extract_all</span>(eposter_string, <span class="st">&quot;[a-zA-ZÆæØøÅå]+@ssb.no&quot;</span>)  <span class="co"># Vi får med alle steder i teksten der en eller flere små eller store bokstaver følges av &#39;ssb.no&#39;, pluss at vi inkluderer Æ Ø Å i både små og store bokstaver</span></a></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;bfu@ssb.no&quot; &quot;rts@ssb.no&quot; &quot;pol@ssb.no&quot; &quot;påt@ssb.no&quot; &quot;AMY@ssb.no&quot;</code></pre>
+<p>Regex gir mange muligheter, men siden det handler om å se mønstre på en spesiell måte (det er en nokså intuitiv prosess), er det er mengdetrening som gjør at man kan bruke det effektivt. Bildet under gir et eksempel på regex syntax.</p>
+<p><img src="figures/regex_cheat_sheet.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="oppgave-1" class="section level2">
+<h2><span class="header-section-number">6.2</span> Oppgave 1</h2>
+<ul>
+<li>Gå inn på www.ssb.no</li>
+<li>Trykk deg inn på en artikkel.</li>
+<li>Høyreklikk, velg «inspiser» og undersøk HTML-koden.</li>
+<li>Hent ut teksten fra artikkelen via <code>rvest</code>-pakken.</li>
+<li>Prøv å bruke både html_node() og html_nodes(). Hva blir forskjellen?</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="utfordringer-hensyn-og-alternativer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fra-html-til-tabell.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
